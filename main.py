@@ -15,10 +15,12 @@ miControladorMesa=ControladorMesa()
 from Controladores.ControladorPartido import ControladorPartido
 miControladorPartido = ControladorPartido
 
+
+
 #Controlador Partido
 
 @app.route("/partidos",methods=['GET'])
-def getPartidos():
+def getPartido():
     json=miControladorPartido.index()
     return jsonify(json)
 
@@ -28,10 +30,10 @@ def crearPartidos():
     json=miControladorPartido.create(data)
     return jsonify(json)
 
-#@app.route("/partidos/<string:id>",methods=['GET'])
-#def getPartidos(id):
-#    json=miControladorPartido.show(id)
-#    return jsonify(json)
+@app.route("/partidos/<string:id>",methods=['GET'])
+def getPartidos(id):
+    json=miControladorPartido.show(id)
+    return jsonify(json)
 
 @app.route("/partidos/<string:id>",methods=['PUT'])
 def modificarPartidos(id):
@@ -79,6 +81,64 @@ def eliminarMesas(id):
     return jsonify(json)
 
 
+#Controlador Candidato
+@app.route("/candidatos",methods=['GET'])
+def getCandidato():
+    json=miControladorMesa.index()
+    return jsonify(json)
+
+@app.route("/candidatos",methods=['POST'])
+def crearCandidato():
+    data = request.get_json()
+    json=miControladorMesa.create(data)
+    return jsonify(json)
+
+@app.route("/candidatos/<string:id>",methods=['GET'])
+def getCandidatos(id):
+    json=miControladorMesa.show(id)
+    return jsonify(json)
+
+@app.route("/candidatos/<string:id>",methods=['PUT'])
+def modificarCandidato(id):
+    data = request.get_json()
+    json=miControladorMesa.update(id,data)
+    return jsonify(json)
+
+@app.route("/candidatos/<string:id>",methods=['DELETE'])
+def eliminarCandidato(id):
+    json=miControladorMesa.delete(id)
+    return jsonify(json)
+
+
+#Controlador Resultado
+@app.route("/resultados",methods=['GET'])
+def getResultado():
+    json=miControladorMesa.index()
+    return jsonify(json)
+
+@app.route("/resultados",methods=['POST'])
+def crearResultado():
+    data = request.get_json()
+    json=miControladorMesa.create(data)
+    return jsonify(json)
+
+@app.route("/resultados/<string:id>",methods=['GET'])
+def getResultados(id):
+    json=miControladorMesa.show(id)
+    return jsonify(json)
+
+@app.route("/resultados/<string:id>",methods=['PUT'])
+def modificarResultado(id):
+    data = request.get_json()
+    json=miControladorMesa.update(id,data)
+    return jsonify(json)
+
+@app.route("/resultados/<string:id>",methods=['DELETE'])
+def eliminarResultado(id):
+    json=miControladorMesa.delete(id)
+    return jsonify(json)
+
+#Controladores
 def loadFileConfig():
     with open('config.json') as f:
         data = json.load(f)
@@ -88,3 +148,4 @@ if __name__=='__main__':
     dataConfig = loadFileConfig()
     print("Server running : "+"http://"+dataConfig["url-backend"]+":" + str(dataConfig["port"]))
     serve(app,host=dataConfig["url-backend"],port=dataConfig["port"])
+
